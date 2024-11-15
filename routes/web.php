@@ -8,6 +8,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
+//Endpoint post api/contest - ContestController
 Route::post('api/contest', [ContestController::class, 'contest']);
 

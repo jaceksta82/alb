@@ -11,6 +11,7 @@ class ContestController extends Controller
     public function contest(Request $request)
     {
         
+        //input validator && custom error messages
         $valid = Validator::make($request->all(), [
             'first_name' => 'required|string|max:50',
             'last_name' => 'required|string|max:50',
@@ -56,13 +57,17 @@ class ContestController extends Controller
             
             'marketing_accepted.boolean' => 'Akceptacja marketingu musi być wartością logiczną.',
         ]);
-
+        
+        //return errors validator
         if ($valid->fails()) {
             return response()->json($valid->errors(), 422);
         }
         
+        // save img file
+        // storage/app/private/receipts
         $receiptImagePath = $this->storeReceiptImage($request);
         
+        //create new record && return data
         $contest = Contest::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
